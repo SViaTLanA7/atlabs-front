@@ -2,17 +2,33 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-export const metadata: Metadata = {
-    title: "StudyFlow — твой персональный AI-ассистент каждый день",
+// src/app/layout.tsx (фрагмент)
+export const metadata = {
+    title: "StudyFlow — твой персональный AI-ассистент для учебы",
     description:
-        "Решай задачи, принимай решения и развивайся быстрее. StudyFlow — единый кабинет: учёба, финансы, карьера, психология.",
-    icons: [
-        { rel: "icon", url: "/brand/favicon.svg" },
-    ],
+        "Решай задачи, готовь конспекты и учись быстрее. StudyFlow — AI-ассистент, который помогает каждый день.",
     openGraph: {
-        title: "StudyFlow",
-        description: "Единый AI-ассистент для учёбы и жизни",
-        images: [{ url: "/brand/favicon.svg" }],
+        title: "StudyFlow — твой персональный AI-ассистент для учебы",
+        description:
+            "Решай задачи, готовь конспекты и учись быстрее. StudyFlow — AI-ассистент, который помогает каждый день.",
+        url: "https://<твой-домен>",
+        siteName: "StudyFlow",
+        images: [
+            {
+                url: "/atlabs/studyflow-banner.png",
+                width: 1280,
+                height: 640,
+                alt: "StudyFlow",
+            },
+        ],
+        type: "website",
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "StudyFlow — твой персональный AI-ассистент для учебы",
+        description:
+            "Решай задачи, готовь конспекты и учись быстрее. StudyFlow — AI-ассистент, который помогает каждый день.",
+        images: ["/atlabs/studyflow-banner.png"],
     },
 };
 
