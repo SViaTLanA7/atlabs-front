@@ -1,96 +1,37 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+/* src/app/globals.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-/* ====== ТЕМНЫЙ ВАРИАНТ-ПЕРЕКЛЮЧАТЕЛЬ ====== */
-@custom-variant dark (&:is(.dark *));
-
-/* ====== ПАЛИТРЫ БРЕНДА ======
-   По умолчанию активна палитра Indigo.
-   Чтобы быстро сменить гамму, просто добавь на <html> класс .theme-violet или .theme-teal
-*/
-:root,
-.theme-indigo {
-    --brand-50:  #eef2ff;
-    --brand-100: #e0e7ff;
-    --brand-200: #c7d2fe;
-    --brand-300: #a5b4fc;
-    --brand-400: #818cf8;
-    --brand-500: #6366f1; /* основной */
-    --brand-600: #4f46e5;
-    --brand-700: #4338ca;
-    --brand-800: #3730a3;
-    --brand-900: #312e81;
+:root{
+    --brand:#3831BF;
+    --brand-100:#EFEFFF;
+    --text:#1D1D1D;
+    --muted:#6B7280;
+    --br:#D9D9D9;
+    --radius:12px;
 }
 
-.theme-violet {
-    --brand-50:#f4f3ff; --brand-100:#ebe9fe; --brand-200:#dcd7fe; --brand-300:#c4b5fd;
-    --brand-400:#a78bfa; --brand-500:#8b5cf6; --brand-600:#7c3aed; --brand-700:#6d28d9;
-    --brand-800:#5b21b6; --brand-900:#4c1d95;
+*{box-sizing:border-box}
+html,body{padding:0;margin:0;color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;}
+a{color:inherit;text-decoration:none}
+
+.container-1160{max-width:1160px;margin:0 auto}
+.h1{font-weight:800;letter-spacing:-0.02em}
+
+.btn-primary{
+    background:var(--brand);color:#fff;border-radius:999px;
+    padding:10px 16px;font-weight:600;display:inline-flex;align-items:center;gap:8px
+}
+.btn-primary:hover{opacity:.9}
+
+.btn-outline{
+    border:1px solid var(--br);border-radius:999px;padding:10px 16px;
+    background:#fff;
+}
+.card{
+    background:#fff;border:1px solid var(--br);border-radius:var(--radius);
+    box-shadow:0 1px 0 rgba(0,0,0,.02)
 }
 
-.theme-teal {
-    --brand-50:#f0fdfa; --brand-100:#ccfbf1; --brand-200:#99f6e4; --brand-300:#5eead4;
-    --brand-400:#2dd4bf; --brand-500:#14b8a6; --brand-600:#0d9488; --brand-700:#0f766e;
-    --brand-800:#115e59; --brand-900:#134e4a;
-}
-
-/* ====== СИСТЕМНЫЕ ПЕРЕМЕННЫЕ ====== */
-@theme inline {
-    --radius-sm: 6px;
-    --radius-md: 10px;
-    --radius-lg: 14px;
-
-    --color-primary: var(--brand-600);
-    --color-primary-foreground: white;
-    --color-secondary: oklch(0.96 0 0);     /* серые карточки */
-    --color-secondary-foreground: oklch(0.25 0 0);
-    --color-accent: var(--brand-500);
-    --color-accent-foreground: white;
-
-    --color-border: oklch(0.90 0 0);
-    --color-ring: var(--brand-400);
-
-    --color-background: white;
-    --color-foreground: oklch(0.20 0 0);
-
-    --color-card: white;
-    --color-card-foreground: oklch(0.20 0 0);
-
-    --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-}
-
-.dark {
-    --color-background: oklch(0.16 0 0);
-    --color-foreground: oklch(0.98 0 0);
-    --color-card: oklch(0.2 0 0);
-    --color-card-foreground: oklch(0.98 0 0);
-    --color-border: oklch(0.28 0 0);
-}
-
-/* ====== БАЗА ====== */
-@layer base {
-    * { @apply border-border outline-ring/50; }
-    html, body { height: 100%; }
-    body { @apply bg-[--color-background] text-[--color-foreground]; }
-    a { @apply text-[--color-primary]; }
-}
-
-/* Типографика */
-h1 { @apply text-[40px] leading-[44px] font-bold tracking-tight; }
-h2 { @apply text-[32px] leading-[36px] font-semibold; }
-h3 { @apply text-[24px] leading-[28px] font-semibold; }
-p  { @apply text-[18px] leading-[28px]; }
-
-/* Компонентные утилиты */
-.btn-primary {
-    @apply inline-flex items-center justify-center rounded-[var(--radius-md)]
-    bg-[--color-primary] text-[--color-primary-foreground] px-5 py-3
-    hover:brightness-110 transition shadow-sm;
-}
-
-.card {
-    @apply rounded-[var(--radius-lg)] border bg-[--color-card] text-[--color-card-foreground] shadow-sm;
-}
-
-/* Контейнер по сетке макета */
-.container-1160 { @apply max-w-[1160px] mx-auto px-4; }
+/* футер */
+.foot-h{font-weight:600;margin-bottom:10px}
+.foot-ul{display:grid;gap:8px}

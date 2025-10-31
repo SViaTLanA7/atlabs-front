@@ -1,44 +1,64 @@
 // src/components/Header.tsx
-"use client";
+'use client';
 
-import Link from "next/link";
+import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import clsx from 'clsx';
+
+const links = [
+    { href: '/', label: 'О StudyFlow' },
+    { href: '/solutions', label: 'Решение задач' },
+    { href: '/writing', label: 'Написание работ' },
+    { href: '/control', label: 'Помощь с контрольной' },
+    { href: '/faq', label: 'FAQ' },
+    { href: '/support', label: 'Поддержка' },
+];
 
 export default function Header() {
+    const pathname = usePathname();
+
     return (
-        <header className="border-b bg-white/80 backdrop-blur">
-            <div className="container-1160 flex items-center gap-4 py-3">
-                {/* ЛОГО */}
+        <header className="sticky top-0 z-40 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 border-b border-[var(--br)]">
+            <div className="container-1160 px-4 h-[64px] flex items-center justify-between gap-3">
+                {/* Лого */}
                 <Link href="/" className="flex items-center gap-2">
-                    {/* если файла нет, покажем текстовый логотип */}
-                    <img
-                        src="/brand/logo.svg"
-                        alt="StudyFlow"
-                        className="h-6 w-auto hidden sm:block"
-                        onError={(e) => {
-                            (e.currentTarget as HTMLImageElement).style.display = "none";
-                        }}
-                    />
-                    <span className="text-[20px] font-semibold tracking-tight">StudyFlow</span>
+                    <span className="inline-flex h-6 w-10 rounded-md bg-[--brand]"></span>
+                    <span className="font-semibold tracking-tight">StudyFlow</span>
                 </Link>
 
-                {/* НАВ */}
-                <nav className="ml-6 hidden md:flex items-center gap-5 text-[14px]">
-                    <Link href="/about" className="hover:opacity-80">О StudyFlow</Link>
-                    <Link href="/solutions" className="hover:opacity-80">Решение задач</Link>
-                    <Link href="/writing" className="hover:opacity-80">Написание работ</Link>
-                    <Link href="/help" className="hover:opacity-80">Помощь с контрольной</Link>
-                    <Link href="/faq" className="hover:opacity-80">FAQ</Link>
+                {/* Навигация */}
+                <nav className="hidden lg:flex items-center gap-4 text-[14px]">
+                    {links.map(l => (
+                        <Link
+                            key={l.href}
+                            href={l.href}
+                            className={clsx(
+                                'px-2 py-1 rounded-md hover:bg-black/[0.04] transition-colors',
+                                pathname === l.href && 'text-[--brand] font-medium'
+                            )}
+                        >
+                            {l.label}
+                        </Link>
+                    ))}
                 </nav>
 
-                {/* CTA */}
-                <div className="ml-auto flex items-center gap-3">
+                {/* Рейтинг + CTA */}
+                <div className="ml-auto hidden md:flex items-center gap-3">
+                    <div className="hidden xl:flex items-center gap-1 text-[12px] px-2 py-[6px] rounded-full border border-[var(--br)]">
+                        <span className="font-medium">★ 5.0</span>
+                        <span className="opacity-60">на основе 1000+ сессий</span>
+                    </div>
                     <Link
                         href="/register"
-                        className="border rounded-[10px] px-4 py-2 text-[14px] hover:bg-black/5"
+                        className="btn-outline"
                     >
                         Зарегистрироваться
                     </Link>
-                    <Link href="/login" className="btn-primary text-[14px]">
+                    <Link
+                        href="/login"
+                        className="btn-primary"
+                    >
                         Войти
                     </Link>
                 </div>
