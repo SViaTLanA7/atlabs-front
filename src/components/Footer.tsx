@@ -28,7 +28,7 @@ export default function Footer(){
                     </div>
                 ))}
 
-                <div className="col-span-12 text-[12px] opacity-70">© 2025 AtLabs. Все права защищены.</div>
+                <div className="col-span-12 text-[12px] opacity-70">© 2025 StudyFlow. Все права защищены.</div>
             </div>
         </footer>
     );

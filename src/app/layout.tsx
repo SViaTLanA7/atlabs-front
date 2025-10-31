@@ -1,39 +1,26 @@
 // src/app/layout.tsx
-import './globals.css';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Inter } from 'next/font/google';
+import type { Metadata } from "next";
+import "./globals.css";
 
-const inter = Inter({
-    subsets: ['latin', 'cyrillic'],
-    weight: ['400', '500', '700', '800'],
-    display: 'swap',
-});
-
-export const metadata = {
-    title: 'AtLabs — твой персональный AI-ассистент',
+export const metadata: Metadata = {
+    title: "StudyFlow — твой персональный AI-ассистент каждый день",
     description:
-        'Учёба, финансы, карьера и развитие — готовые решения и консультации. Ответы за секунды.',
-    metadataBase: new URL('https://example.com'),
+        "Решай задачи, принимай решения и развивайся быстрее. StudyFlow — единый кабинет: учёба, финансы, карьера, психология.",
+    icons: [
+        { rel: "icon", url: "/brand/favicon.svg" },
+    ],
     openGraph: {
-        title: 'AtLabs — твой персональный AI-ассистент',
-        description:
-            'Учёба, финансы, карьера и развитие — готовые решения и консультации.',
-        images: ['/og.png'],
-    },
-    icons: {
-        icon: '/favicon.ico',
+        title: "StudyFlow",
+        description: "Единый AI-ассистент для учёбы и жизни",
+        images: [{ url: "/brand/favicon.svg" }],
     },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+    // Чтобы быстро сменить гамму: добавь на html класс "theme-violet" или "theme-teal"
     return (
-        <html lang="ru">
-        <body className={inter.className}>
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        </body>
+        <html lang="ru" className="theme-indigo">
+        <body>{children}</body>
         </html>
     );
 }

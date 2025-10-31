@@ -8,7 +8,7 @@ export default function Chat(){
                 </div>
 
                 <div className="mt-4 rounded-md bg-white p-3 border" style={{borderColor:'var(--stroke)'}}>
-                    <div className="font-semibold">AtLabs</div>
+                    <div className="font-semibold">StudyFlow</div>
                     <ol className="mt-2 list-decimal pl-6 text-[14px] space-y-1">
                         <li>Доказательство, что точки P, Q, M, N лежат в одной плоскости…</li>
                         <li>Рассмотрим гомотетию…</li>
@@ -16,7 +16,7 @@ export default function Chat(){
                 </div>
 
                 <div className="mt-6">
-          <textarea className="w-full rounded-[10px] border p-3" rows={4} placeholder="Напиши AtLabs"
+          <textarea className="w-full rounded-[10px] border p-3" rows={4} placeholder="Напиши StudyFlow"
                     style={{borderColor:'var(--stroke)'}}/>
                     <div className="mt-2 flex justify-end">
                         <button className="btn btn-primary rounded-[10px]">Отправить</button>
