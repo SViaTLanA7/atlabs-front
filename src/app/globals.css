@@ -1,157 +1,47 @@
-/* src/app/globals.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-/* ====== Токены ====== */
 :root{
-    --brand:#3831BF;         /* фиолетовый бренда */
-    --brand-100:#EFEFFF;     /* светлый для фона/бейджей */
-    --text:#1D1D1D;          /* основной текст */
-    --muted:#6B7280;         /* вторичный текст */
-    --br:#D9D9D9;            /* базовая граница */
-    --bg:#FFFFFF;            /* фон страницы */
-    --radius:12px;           /* базовый радиус по макету */
-    --radius-lg:16px;
-    --shadow:0 1px 0 rgba(0,0,0,.04);
+    --brand:#3831BF;
+    --brand-100:#EFEFFF;
+    --text:#1D1D1D;
+    --muted:#6B7280;
+    --br:#E5E7EB;
+    --radius:12px;
 }
 
-*{ box-sizing:border-box; }
-html,body{
-    padding:0;
-    margin:0;
-    color:var(--text);
-    background:var(--bg);
-    font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-}
-a{ color:inherit; text-decoration:none; }
+*{box-sizing:border-box}
+html,body{padding:0;margin:0;color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;background:#fff}
+a{color:inherit;text-decoration:none}
 
-/* ====== Контейнер ====== */
-.container-1160{
-    max-width:1160px;
-    margin:0 auto;
-}
+.container-1160{max-width:1160px;margin:0 auto}
+.h1{font-weight:800;letter-spacing:-0.02em}
+.section-title{font-size:28px;font-weight:800;letter-spacing:-0.02em}
 
-/* ====== Типографика ====== */
-.h1{
-    font-weight:800;
-    letter-spacing:-0.02em;
-    line-height:1.1;
-    /* адаптивный размер как в фигме */
-    font-size:clamp(28px, 5vw, 44px);
-}
-.h2{
-    font-weight:800;
-    letter-spacing:-0.02em;
-    line-height:1.15;
-    font-size:clamp(22px, 3.2vw, 28px);
-}
-.muted{ color:var(--muted); }
-
-/* ====== Кнопки (радиус 12px по макету) ====== */
 .btn-primary{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:10px 16px;
-    font-weight:600;
-    color:#fff;
-    background:var(--brand);
-    border-radius:12px;
-    border:1px solid transparent;
-    box-shadow:var(--shadow);
-    transition:opacity .2s ease, transform .02s ease;
+    background:var(--brand);color:#fff;border-radius:999px;
+    padding:10px 16px;font-weight:600;display:inline-flex;align-items:center;gap:8px
 }
-.btn-primary:hover{ opacity:.92; }
-.btn-primary:active{ transform:translateY(1px); }
-
+.btn-primary:hover{opacity:.9}
 .btn-outline{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:10px 16px;
-    font-weight:600;
-    background:#fff;
-    color:var(--text);
-    border:1px solid var(--br);
-    border-radius:12px;
-    transition:background .2s ease, border-color .2s ease;
+    border:1px solid var(--br);border-radius:999px;padding:10px 16px;background:#fff;
 }
-.btn-outline:hover{
-    background:var(--brand-100);
-    border-color:var(--brand);
-}
-
-/* ====== Карточки ====== */
 .card{
-    background:#fff;
-    border:1px solid var(--br);
-    border-radius:var(--radius);
-    box-shadow:var(--shadow);
+    background:#fff;border:1px solid var(--br);border-radius:var(--radius);
+    box-shadow:0 1px 0 rgba(0,0,0,.02)
 }
 
-/* ====== Бейдж/пилюля/табы (для блоков под героем) ====== */
-.badge{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    padding:4px 10px;
-    font-size:12px;
-    font-weight:600;
-    color:var(--brand);
-    background:var(--brand-100);
-    border:1px solid #E0E4FF;
-    border-radius:999px;
-}
-.pill{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:6px 12px;
-    font-size:13px;
-    border:1px solid var(--br);
-    border-radius:999px;
-    background:#fff;
-}
+/* footer small helpers */
+.foot-h{font-weight:600;margin-bottom:10px}
+.foot-ul{display:grid;gap:8px}
 
-.tabs{
-    display:flex;
-    gap:8px;
-    overflow:auto;
-}
-.tab{
-    padding:8px 14px;
-    border:1px solid var(--br);
-    border-radius:999px;
-    background:#fff;
-    font-weight:600;
-    white-space:nowrap;
-}
-.tab.active{
-    color:#fff;
-    background:var(--brand);
-    border-color:transparent;
-}
+/* header */
+header{transition:background .3s, box-shadow .3s}
+header a{font-weight:500}
 
-/* ====== Хедер (мягкий фон при скролле) ====== */
-header{
-    position:relative;
-    z-index:10;
-    transition:background .25s ease, box-shadow .25s ease, border-color .25s ease;
-    backdrop-filter:saturate(140%) blur(4px);
-}
-header a{ font-weight:500; }
-
-/* ====== Футер ====== */
-.foot-h{ font-weight:600; margin-bottom:10px; }
-.foot-ul{ display:grid; gap:8px; }
-
-/* ====== Утилиты ====== */
-.no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
-.no-scrollbar::-webkit-scrollbar{ display:none; }
-
-/* ====== Мобайл ====== */
+/* mobile */
 @media (max-width: 768px){
-    .container-1160{ max-width:100%; }
-    .btn-primary, .btn-outline{ padding:10px 14px; }
+    .container-1160{max-width:100%}
+    .section-title{font-size:24px}
 }
+.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+.no-scrollbar::-webkit-scrollbar{display:none}

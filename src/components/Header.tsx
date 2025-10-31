@@ -1,71 +1,55 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import clsx from 'clsx';
-
-const links = [
-    { href: '/', label: 'О StudyFlow' },
-    { href: '/solutions', label: 'Решение задач' },
-    { href: '/writing', label: 'Написание работ' },
-    { href: '/control', label: 'Помощь с контрольной' },
-    { href: '/faq', label: 'FAQ' },
-    { href: '/support', label: 'Поддержка' },
-];
+import { useState } from 'react';
 
 export default function Header() {
-    const pathname = usePathname();
+    const [open, setOpen] = useState(false);
 
     return (
-        <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-[--br] shadow-sm">
-            <div className="container-1160 px-4 h-[72px] flex items-center justify-between">
-                {/* ЛОГО */}
-                <Link href="/" className="flex items-center gap-2 shrink-0">
-                    <span className="inline-flex h-6 w-6 rounded-md bg-[--brand]" />
-                    <span className="font-bold text-[18px] tracking-tight text-[--brand]">StudyFlow</span>
+        <header className="sticky top-0 z-40 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/50 border-b border-[var(--br)]">
+            <div className="container-1160 px-4 h-14 flex items-center justify-between">
+                <Link href="/" className="flex items-center gap-2 font-bold">
+                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-[--brand] text-white">—</span>
+                    <span>StudyFlow</span>
                 </Link>
 
-                {/* НАВИГАЦИЯ */}
-                <nav className="hidden xl:flex items-center gap-6 text-[15px] text-[--text]">
-                    {links.map(l => (
-                        <Link
-                            key={l.href}
-                            href={l.href}
-                            className={clsx(
-                                'hover:text-[--brand] transition-colors',
-                                pathname === l.href && 'text-[--brand] font-semibold'
-                            )}
-                        >
-                            {l.label}
-                        </Link>
-                    ))}
+                <nav className="hidden md:flex items-center gap-6 text-[14px]">
+                    <Link href="/about">О StudyFlow</Link>
+                    <Link href="/solutions">Решение задач</Link>
+                    <Link href="/write">Написание работ</Link>
+                    <Link href="/help">Помощь с контрольной</Link>
+                    <Link href="/faq">FAQ</Link>
+                    <Link href="/support">Поддержка</Link>
                 </nav>
 
-                {/* CTA БЛОК */}
-                <div className="hidden md:flex items-center gap-3 ml-auto">
-                    <div className="hidden lg:flex items-center gap-1 text-[13px] px-3 py-1 rounded-full border border-[--br] bg-[--brand-100] text-[--brand]">
-                        ★ <span className="font-medium">5.0</span>
-                        <span className="opacity-70 ml-1">на основе 1000+ сессий</span>
-                    </div>
-                    <Link
-                        href="/register"
-                        className="btn-outline hover:border-[--brand] hover:text-[--brand]"
-                    >
-                        Зарегистрироваться
-                    </Link>
-                    <Link
-                        href="/login"
-                        className="btn-primary bg-[--brand] hover:opacity-90"
-                    >
-                        Войти
-                    </Link>
+                <div className="hidden md:flex items-center gap-2">
+                    <Link href="/register" className="btn-outline py-2">Зарегистрироваться</Link>
+                    <Link href="/login" className="btn-primary py-2">Войти</Link>
                 </div>
 
-                {/* Мобильное меню (бургер) */}
-                <button className="xl:hidden ml-auto flex items-center justify-center w-9 h-9 rounded-md border border-[--br]">
+                <button className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-md border border-[var(--br)]"
+                        onClick={() => setOpen(v => !v)} aria-label="Меню">
                     ☰
                 </button>
             </div>
+
+            {open && (
+                <div className="md:hidden border-t border-[var(--br)] bg-white">
+                    <div className="container-1160 px-4 py-3 grid gap-3 text-[15px]">
+                        <Link href="/about" onClick={()=>setOpen(false)}>О StudyFlow</Link>
+                        <Link href="/solutions" onClick={()=>setOpen(false)}>Решение задач</Link>
+                        <Link href="/write" onClick={()=>setOpen(false)}>Написание работ</Link>
+                        <Link href="/help" onClick={()=>setOpen(false)}>Помощь с контрольной</Link>
+                        <Link href="/faq" onClick={()=>setOpen(false)}>FAQ</Link>
+                        <Link href="/support" onClick={()=>setOpen(false)}>Поддержка</Link>
+                        <div className="flex gap-2 pt-2">
+                            <Link href="/register" className="btn-outline flex-1 text-center py-2">Регистрация</Link>
+                            <Link href="/login" className="btn-primary flex-1 text-center py-2">Войти</Link>
+                        </div>
+                    </div>
+                </div>
+            )}
         </header>
     );
 }
