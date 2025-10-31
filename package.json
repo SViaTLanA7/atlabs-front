@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "ci:guard": "node -e \"const fs=require('fs');const cp=require('child_process');const files=cp.execSync('git ls-files | grep -E \\'\\\\.(ts|tsx)$\\'',{encoding:'utf8'}).trim().split('\\n');let bad=[];for(const f of files){const s=fs.readFileSync(f,'utf8');if(/\\\"use client\\\"|\\'use client\\'/.test(s)&&/export const metadata/.test(s))bad.push(f);}if(bad.length){console.error('Bad files:',bad.join('\\n'));process.exit(1);}console.log('Guard OK');\""
   },
   "dependencies": {
     "@twa-dev/sdk": "^8.0.2",

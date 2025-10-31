@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      CI: true
+      NEXT_TELEMETRY_DISABLED: 1
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install deps (clean)
+        run: npm ci
+
+      - name: Guard: forbid `export const metadata` in client files
+        run: |
+          set -e
+          # Ищем файлы, где одновременно встречаются 'use client' и 'export const metadata'
+          MATCHES=$(git ls-files | grep -E '\.(ts|tsx)$' | xargs -I{} bash -lc "awk 'BEGIN{u=0;m=0} /use client/{u=1} /export const metadata/{m=1} END{if(u && m) exit 0; else exit 1}' '{}' >/dev/null 2>&1 && echo '{}'" || true)
+          if [ -n "$MATCHES" ]; then
+            echo "❌ Найдены клиентские файлы с export metadata (так нельзя в Next.js):"
+            echo "$MATCHES"
+            echo "Исправь: вынеси metadata в layout.tsx либо убери 'use client'."
+            exit 1
+          fi
+          echo "✅ Guard passed"
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
