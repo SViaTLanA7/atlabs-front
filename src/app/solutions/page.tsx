@@ -1,11 +1,7 @@
-import type { Metadata } from "next";
-import SolutionsClient from "./SolutionsClient"; // ВАЖНО: относительный путь
+// src/app/solutions/page.tsx
+export const metadata = { title: 'Решения задач — AtLabs' };
 
-export const metadata: Metadata = {
-    title: "Решения задач — StudyFlow",
-    description:
-        "Введи условие или прикрепи фото — подготовим аккуратное решение за секунды.",
-};
+import SolutionsClient from './SolutionsClient'; // <- правильный относительный импорт
 
 export default function SolutionsPage() {
     return <SolutionsClient />;

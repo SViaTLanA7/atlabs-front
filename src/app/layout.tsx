@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import Header from "@/components/Header";
+// src/app/layout.tsx
+import type { Metadata } from 'next';
+import './globals.css';
+import Header from '@/components/Header';
 
 export const metadata: Metadata = {
-    title: "StudyFlow — твой персональный AI-ассистент для учёбы",
-    description:
-        "Решай задачи, пиши конспекты и готовься к сессии быстрее — StudyFlow подскажет и проведёт по шагам.",
+    title: 'AtLabs — ваш персональный AI-ассистент',
+    description: 'Решения задач, конспекты и помощь с учёбой в одном месте.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
