@@ -1,211 +1,211 @@
-// src/components/solutions/SolutionsClient.tsx
-"use client";
+'use client';
 
-import { useRef, useState } from "react";
-import Image from "next/image";
+import { useState, useRef } from "react";
+import Spinner from "@/components/ui/Spinner";
+import { historyAdd, type HistoryItem } from "@/lib/history";
 
-type FilePreview = { id: string; name: string; size: number };
+type ApiResponse =
+    | {
+    id: string;
+    createdAt: number;
+    input: { text: string; files: { name: string; size?: number }[] };
+    output: { title: string; steps: string[]; note?: string };
+    tokensSpent: number;
+    status: "done";
+}
+    | { error: string };
 
 export default function SolutionsClient() {
     const [text, setText] = useState("");
-    const [files, setFiles] = useState<FilePreview[]>([]);
+    const [files, setFiles] = useState<File[]>([]);
     const [submitting, setSubmitting] = useState(false);
-    const [tokensLeft, setTokensLeft] = useState(100); // заглушка: «100 токенов»
+    const [tokens, setTokens] = useState(100);
+    const [result, setResult] = useState<HistoryItem | null>(null);
+    const [error, setError] = useState<string | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const inputRef = useRef<HTMLInputElement | null>(null);
-
-    function onPickFiles() {
-        inputRef.current?.click();
-    }
-
-    function onFilesSelected(e: React.ChangeEvent<HTMLInputElement>) {
-        const list = e.target.files;
-        if (!list) return;
-        const next: FilePreview[] = [];
-        for (let i = 0; i < list.length; i++) {
-            const f = list.item(i)!;
-            next.push({ id: crypto.randomUUID(), name: f.name, size: f.size });
+    const handleSubmit = async () => {
+        setError(null);
+        setResult(null);
+        if (!text.trim() && files.length === 0) {
+            setError("Введите условие или прикрепите файл.");
+            return;
         }
-        setFiles((prev) => [...prev, ...next]);
-        // очищаем value, чтобы можно было выбрать те же файлы повторно
-        e.currentTarget.value = "";
-    }
-
-    function removeFile(id: string) {
-        setFiles((prev) => prev.filter((f) => f.id !== id));
-    }
-
-    async function onSubmit(e: React.FormEvent) {
-        e.preventDefault();
-        if (!text.trim() && files.length === 0) return;
-
         setSubmitting(true);
         try {
-            // тут будет реальный вызов API (FastAPI/Next API) — заглушка:
-            await new Promise((r) => setTimeout(r, 1200));
-            setTokensLeft((n) => Math.max(0, n - 5)); // условно списали 5 токенов
+            const filesInfo = files.map((f) => ({ name: f.name, size: f.size }));
+
+            const res = await fetch("/api/solutions", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ text, files: filesInfo }),
+            });
+
+            const data: ApiResponse = await res.json();
+            if (!res.ok || "error" in data) throw new Error((data as any).error || "REQUEST_FAILED");
+
+            setTokens((t) => Math.max(0, t - (data.tokensSpent ?? 5)));
+
+            const item: HistoryItem = {
+                id: (data as any).id,
+                createdAt: (data as any).createdAt,
+                input: (data as any).input,
+                output: (data as any).output,
+                tokensSpent: (data as any).tokensSpent,
+                status: (data as any).status,
+            };
+
+            setResult(item);
+            historyAdd(item);
             setText("");
             setFiles([]);
-            alert("Заявка отправлена! Мы подготовим решение и уведомим.");
+        } catch (e) {
+            setError("Произошла ошибка при отправке. Попробуйте ещё раз.");
         } finally {
             setSubmitting(false);
         }
-    }
+    };
+
+    const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const list = e.target.files;
+        if (!list) return;
+        setFiles((prev) => [...prev, ...Array.from(list)]);
+        if (fileInputRef.current) fileInputRef.current.value = "";
+    };
+
+    const removeFile = (name: string) => {
+        setFiles((prev) => prev.filter((f) => f.name !== name));
+    };
 
     return (
-        <main className="bg-[oklch(0.68_0.2_300)] min-h-screen">
-            <section className="py-10 md:py-14">
-                <div className="container mx-auto px-4">
-                    {/* Заголовок */}
-                    <div className="mb-6 md:mb-8">
-                        <h1 className="text-3xl md:text-4xl font-semibold text-white tracking-[-0.01em]">
-                            РЕШЕНИЯ ЗАДАЧ
-                        </h1>
-                        <p className="mt-2 text-white/85 max-w-2xl">
-                            Просто введи условие или прикрепи фото — мы быстро подготовим
-                            пошаговое решение с объяснениями.
-                        </p>
-                    </div>
+        <div className="grid grid-cols-12 gap-6 mt-6">
+            {/* Левая часть */}
+            <div className="col-span-12 lg:col-span-8">
+                <div className="card p-4 md:p-5 space-y-4">
+                    <label className="text-[13px] font-medium">Условие задачи</label>
+                    <textarea
+                        className="textarea"
+                        placeholder="Например: Решите квадратное уравнение x² - 5x + 6 = 0"
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
+                        disabled={submitting}
+                    />
 
-                    <div className="grid lg:grid-cols-[1fr_360px] gap-6">
-                        {/* Левая колонка: форма */}
-                        <form
-                            onSubmit={onSubmit}
-                            className="rounded-3xl border border-white/15 bg-white/8 backdrop-blur p-4 md:p-6"
-                        >
-                            <label className="block text-white/90 text-sm mb-3">
-                                Введи или прикрепи задачу (текст, фото, файл)
-                            </label>
-
-                            <textarea
-                                value={text}
-                                onChange={(e) => setText(e.target.value)}
-                                placeholder="Например: «Решите квадратное уравнение x² - 5x + 6 = 0»"
-                                className="min-h-[160px] w-full resize-y rounded-xl bg-white/10 px-4 py-3 text-white placeholder-white/60 outline-none focus:bg-white/12"
-                            />
-
-                            {/* Прикрепления */}
-                            <div className="mt-4 flex flex-wrap items-center gap-3">
-                                <button
-                                    type="button"
-                                    onClick={onPickFiles}
-                                    className="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-white hover:bg-white/15 transition"
-                                >
-                                    <PaperclipIcon />
-                                    Прикрепить файл
-                                </button>
-                                <input
-                                    ref={inputRef}
-                                    type="file"
-                                    multiple
-                                    onChange={onFilesSelected}
-                                    className="hidden"
-                                    accept=".png,.jpg,.jpeg,.pdf,.doc,.docx,.txt"
-                                />
-                                <span className="text-white/70 text-sm">Допустимо: PNG/JPG/PDF/DOC/TXT</span>
-                            </div>
-
-                            {files.length > 0 && (
-                                <div className="mt-4 rounded-xl border border-white/15 bg-white/6">
-                                    {files.map((f) => (
-                                        <div
-                                            key={f.id}
-                                            className="flex items-center justify-between px-4 py-2 text-white/90"
-                                        >
-                                            <div className="flex items-center gap-3">
-                                                <Image
-                                                    src="/atlabs/folder.svg"
-                                                    alt=""
-                                                    width={20}
-                                                    height={20}
-                                                    className="opacity-80"
-                                                />
-                                                <div className="text-sm">
-                                                    {f.name}{" "}
-                                                    <span className="text-white/60">
-                            ({Math.round(f.size / 1024)} кб)
-                          </span>
-                                                </div>
-                                            </div>
-                                            <button
-                                                type="button"
-                                                onClick={() => removeFile(f.id)}
-                                                className="text-white/70 hover:text-white"
-                                                aria-label="Удалить файл"
-                                                title="Удалить"
-                                            >
-                                                ✕
-                                            </button>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-
-                            <div className="mt-6 flex flex-col sm:flex-row items-center gap-3">
-                                <button
-                                    type="submit"
-                                    disabled={submitting || (!text.trim() && files.length === 0)}
-                                    className="inline-flex w-full sm:w-auto items-center justify-center rounded-xl bg-white px-6 py-3 font-medium text-[oklch(0.5_0.21_300)] hover:opacity-90 disabled:opacity-50 transition"
-                                >
-                                    {submitting ? "Отправляем…" : "Получить решение"}
-                                </button>
-
-                                <div className="text-white/80 text-sm">
-                                    5 токенов ≈ 1 задача · Осталось:{" "}
-                                    <span className="text-white font-semibold">{tokensLeft}</span>
-                                </div>
-                            </div>
-                        </form>
-
-                        {/* Правая колонка: преимущества / подсказки */}
-                        <aside className="rounded-3xl border border-white/15 bg-white/6 p-4 md:p-6">
-                            <div className="flex items-center gap-3">
-                                <Image src="/atlabs/book.svg" alt="" width={32} height={32} />
-                                <div className="text-white font-semibold">
-                                    Подписка с безлимитом токенов
-                                </div>
-                            </div>
-
-                            <ul className="mt-4 space-y-3 text-white/85 text-sm">
-                                <li>• Решай задачи онлайн без ограничений</li>
-                                <li>• Поддержка по 160+ предметам</li>
-                                <li>• Доступ к базе готовых решений и конспектов</li>
-                                <li>• Бесплатные работы каждый месяц</li>
-                                <li>• Экономь время и деньги — учись удобнее и быстрее</li>
-                            </ul>
-
+                    <div className="flex flex-wrap items-center gap-6">
+                        <div className="flex items-center gap-3">
                             <button
-                                className="mt-6 w-full rounded-xl bg-white/10 py-2.5 text-white hover:bg-white/15 transition"
-                                onClick={() => alert("Откроем страницу тарифов")}
+                                type="button"
+                                onClick={() => fileInputRef.current?.click()}
+                                className="btn btn-ghost disabled:opacity-60"
+                                disabled={submitting}
                             >
-                                Перейти к тарифам
+                                📎 Прикрепить файл
                             </button>
+                            <input
+                                type="file"
+                                multiple
+                                ref={fileInputRef}
+                                onChange={handleFiles}
+                                className="hidden"
+                                accept=".png,.jpg,.jpeg,.pdf,.doc,.docx,.txt"
+                            />
+                            <span className="text-[13px] text-[var(--muted)]">PNG, JPG, PDF, DOC — до 10 МБ</span>
+                        </div>
 
-                            <hr className="my-6 border-white/10" />
-
-                            <div className="text-white/90 font-medium mb-2">
-                                Советы для быстрого ответа
-                            </div>
-                            <ul className="space-y-2 text-white/80 text-sm">
-                                <li>• Пишите условие максимально конкретно</li>
-                                <li>• Прикладывайте фото с хорошим качеством</li>
-                                <li>• Указывайте формат результата: «пошаговое решение», «конспект», «объясни простыми словами»</li>
-                            </ul>
-                        </aside>
+                        <div className="ml-auto flex items-center gap-6">
+                            <span className="badge">5 токенов ≈ 1 задача</span>
+                            <span className="text-[14px]">
+                Осталось:&nbsp;<b>{tokens}</b>
+              </span>
+                            <button
+                                onClick={handleSubmit}
+                                disabled={submitting}
+                                className="btn btn-primary rounded-[12px] inline-flex items-center gap-2 disabled:opacity-60"
+                            >
+                                {submitting ? (
+                                    <>
+                                        <Spinner /> <span>Отправляем…</span>
+                                    </>
+                                ) : (
+                                    "Получить решение"
+                                )}
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </section>
-        </main>
-    );
-}
 
-function PaperclipIcon() {
-    return (
-        <svg width="16" height="16" viewBox="0 0 24 24" className="text-white">
-            <path
-                fill="currentColor"
-                d="M7 13.5V6.75a4.75 4.75 0 1 1 9.5 0V14a6.5 6.5 0 1 1-13 0V8.5a3 3 0 1 1 6 0V15a1.5 1.5 0 1 1-3 0V9h1.5v6a.5.5 0 0 0 1 0V8.5a1.5 1.5 0 1 0-3 0V14a5 5 0 1 0 10 0V6.75a3.25 3.25 0 1 0-6.5 0V13.5H7Z"
-            />
-        </svg>
+                    {files.length > 0 && (
+                        <div className="mt-1 space-y-2">
+                            {files.map((f) => (
+                                <div
+                                    key={f.name + f.size}
+                                    className="flex justify-between items-center rounded-lg border border-[var(--br)] px-3 py-2 text-[14px]"
+                                >
+                                    <span className="truncate max-w-[70%]">{f.name}</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => removeFile(f.name)}
+                                        className="text-[var(--muted)] hover:opacity-80"
+                                        disabled={submitting}
+                                    >
+                                        ✕
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {error && (
+                        <div className="rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-red-700 text-sm">
+                            {error}
+                        </div>
+                    )}
+                </div>
+
+                {/* Лоадер/результат */}
+                {submitting && (
+                    <div className="mt-6 card p-4">
+                        <div className="flex items-center gap-3">
+                            <Spinner />
+                            <span>Готовим решение…</span>
+                        </div>
+                        <div className="mt-3 h-[100px] rounded-lg bg-[var(--brand-100)] animate-pulse" />
+                    </div>
+                )}
+
+                {result && !submitting && (
+                    <div className="mt-6 card p-4 md:p-5 space-y-3">
+                        <h3 className="text-[18px] font-semibold">{result.output.title}</h3>
+                        <div className="space-y-2 text-[15px] leading-relaxed">
+                            {result.output.steps.map((s, i) => (
+                                <p key={i}>{s}</p>
+                            ))}
+                        </div>
+                        {result.output.note && (
+                            <div className="mt-2 text-[13px] text-[var(--muted)]">{result.output.note}</div>
+                        )}
+                        <div className="pt-3 flex flex-wrap gap-3 border-t border-[var(--br)]">
+                            <a href="/history" className="btn btn-ghost">Сохранено в Историю</a>
+                            <button className="btn btn-ghost">Пояснить проще</button>
+                            <button className="btn btn-ghost">Сформировать конспект</button>
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* Правая часть */}
+            <aside className="col-span-12 lg:col-span-4">
+                <div className="card p-4 md:p-5">
+                    <h4 className="font-semibold">Подписка с безлимитом токенов</h4>
+                    <ul className="mt-2 space-y-2 text-[14px]">
+                        <li>— Решай без ограничений</li>
+                        <li>— Поддержка по 160+ предметам</li>
+                        <li>— Доступ к базе готовых решений</li>
+                    </ul>
+                    <a className="mt-4 w-full btn btn-primary justify-center" href="/pricing">
+                        Перейти к тарифам
+                    </a>
+                </div>
+            </aside>
+        </div>
     );
 }
