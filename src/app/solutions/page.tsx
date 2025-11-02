@@ -1,7 +1,7 @@
 // серверный компонент только рендерит каркас и метаданные
 export const metadata = { title: 'Решения задач — StudyFlow' };
 
-import SolutionsClient from '@/components/solutions/SolutionsClient';
+import SolutionsClient from './SolutionsClient';
 
 export default function SolutionsPage() {
     return (
