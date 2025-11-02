@@ -1,45 +1,34 @@
-// src/components/Footer.tsx
-import Link from 'next/link';
-
-export default function Footer() {
+export default function Footer(){
     return (
-        <footer className="mt-16 border-t border-[var(--br)] bg-[#fafafa]">
-            <div className="container-1160 px-4 py-10 grid gap-10 md:grid-cols-4 text-[14px]">
+        <footer className="mt-16 border-t border-[var(--br)]">
+            <div className="container-1160 px-4 py-10 grid md:grid-cols-4 gap-10">
                 <div>
-                    <div className="flex items-center gap-2 mb-3">
-                        <span className="inline-flex h-6 w-10 rounded-md bg-[--brand]"></span>
-                        <span className="font-semibold">StudyFlow</span>
-                    </div>
-                    <p className="opacity-70">© 2025 StudyFlow. Все права защищены.</p>
+                    <div className="font-extrabold">StudyFlow</div>
+                    <div className="muted mt-2">© {new Date().getFullYear()} StudyFlow. Все права защищены.</div>
                 </div>
-
                 <div>
-                    <h4 className="foot-h">AI-сервисы</h4>
-                    <ul className="foot-ul">
-                        <li><Link href="/study">Помощь с учёбой</Link></li>
-                        <li><Link href="/finance">Финансовый консультант</Link></li>
-                        <li><Link href="/career">Карьерный коучинг</Link></li>
-                        <li><Link href="/psy">Психологическая поддержка</Link></li>
+                    <div className="font-semibold">AI-сервисы</div>
+                    <ul className="mt-3 grid gap-2 muted">
+                        <li>Помощь с учёбой</li>
+                        <li>Финансовый консультант</li>
+                        <li>Карьерный коучинг</li>
+                        <li>Психологическая поддержка</li>
                     </ul>
                 </div>
-
                 <div>
-                    <h4 className="foot-h">Экосистема</h4>
-                    <ul className="foot-ul">
-                        <li><Link href="/solutions">Решение задач</Link></li>
-                        <li><Link href="/templates">Шаблоны</Link></li>
-                        <li><Link href="/miniapp">Telegram мини-приложение</Link></li>
+                    <div className="font-semibold">Экосистема</div>
+                    <ul className="mt-3 grid gap-2 muted">
+                        <li>Решение задач</li>
+                        <li>Шаблоны</li>
+                        <li>Telegram мини-приложение</li>
                     </ul>
                 </div>
-
                 <div>
-                    <h4 className="foot-h">О компании</h4>
-                    <ul className="foot-ul">
-                        <li><Link href="/">Главная</Link></li>
-                        <li><Link href="/how">Как это работает</Link></li>
-                        <li><Link href="/pricing">Тарифы</Link></li>
-                        <li><Link href="/reviews">Отзывы</Link></li>
-                        <li><Link href="/faq">FAQ</Link></li>
+                    <div className="font-semibold">О компании</div>
+                    <ul className="mt-3 grid gap-2 muted">
+                        <li><a href="/faq">FAQ</a></li>
+                        <li><a href="/pricing">Тарифы</a></li>
+                        <li><a href="/help">Поддержка</a></li>
                     </ul>
                 </div>
             </div>

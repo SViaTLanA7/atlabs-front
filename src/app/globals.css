@@ -1,39 +1,57 @@
-/* src/app/globals.css */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root{
-    --brand:#3831BF;
-    --brand-100:#EFEFFF;
+    --brand:#6f3cff;        /* фирменный фиолетовый */
+    --brand-100:#f3efff;
     --text:#111827;
     --muted:#6B7280;
     --br:#E5E7EB;
-    --bg:#FFFFFF;
+    --bg:#ffffff;
+    --bg-soft:#fafafa;
     --radius:12px;
 }
 
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif}
+html,body{
+    padding:0;margin:0;background:var(--bg);color:var(--text);
+    font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
+}
 a{color:inherit;text-decoration:none}
 
-.wrap{max-width:1160px;margin:0 auto}
 .container-1160{max-width:1160px;margin:0 auto}
-
-/* Типографика */
 .h1{font-weight:800;letter-spacing:-0.02em}
+.h2{font-weight:800;letter-spacing:-0.02em}
 
-/* Карточки/кнопки */
-.card{background:#fff;border:1px solid var(--br);border-radius:var(--radius);box-shadow:0 1px 0 rgba(0,0,0,.02)}
-.btn-primary{background:var(--brand);color:#fff;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 18px;border-radius:999px;font-weight:700}
-.btn-primary:hover{opacity:.92}
-.btn-outline{background:#fff;border:1px solid var(--br);padding:12px 18px;border-radius:999px}
-
-/* Утилиты */
-.grid-hero{display:grid;grid-template-columns:1fr;gap:24px}
-@media (min-width: 980px){
-    .grid-hero{grid-template-columns:1fr 480px;align-items:center}
+.btn-primary{
+    background:var(--brand);color:#fff;border-radius:12px;
+    padding:12px 18px;font-weight:600;display:inline-flex;align-items:center;gap:8px
 }
-.labs-grid{display:grid;grid-template-columns:1fr;gap:16px}
-@media (min-width: 760px){.labs-grid{grid-template-columns:repeat(2,1fr)}}
-@media (min-width: 1160px){.labs-grid{grid-template-columns:repeat(4,1fr)}}
+.btn-primary:hover{opacity:.92}
 
-header{transition:background .3s ease, box-shadow .3s ease}
+.btn-outline{
+    border:1px solid var(--br);border-radius:12px;padding:12px 18px;background:#fff;
+}
+
+.chip{
+    display:inline-flex;align-items:center;gap:6px;
+    border:1px solid var(--br);border-radius:999px;padding:6px 12px;
+    font-size:14px;background:#fff;
+}
+
+.card{
+    background:#fff;border:1px solid var(--br);border-radius:var(--radius);
+    box-shadow:0 1px 0 rgba(0,0,0,.02)
+}
+
+/* header */
+.site-header{position:sticky;top:0;z-index:30;background:#fff}
+.site-header--scrolled{box-shadow:0 1px 0 rgba(0,0,0,.06)}
+
+/* utils */
+.muted{color:var(--muted)}
+.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+.no-scrollbar::-webkit-scrollbar{display:none}
+
+@media (max-width: 768px){
+    .container-1160{padding:0 16px;max-width:100%}
+}

@@ -1,19 +1,19 @@
-// src/app/layout.tsx
-import type { Metadata } from 'next';
 import './globals.css';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
-export const metadata: Metadata = {
-    title: 'AtLabs — ваш персональный AI-ассистент',
-    description: 'Решения задач, конспекты и помощь с учёбой в одном месте.',
+export const metadata = {
+    title: 'StudyFlow',
+    description: 'Твой персональный AI-ассистент для учёбы',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({children}:{children:React.ReactNode}){
     return (
         <html lang="ru">
         <body>
-        <Header />
+        <Header/>
         <main>{children}</main>
+        <Footer/>
         </body>
         </html>
     );

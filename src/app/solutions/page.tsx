@@ -1,8 +1,7 @@
-// src/app/solutions/page.tsx
-export const metadata = { title: 'Решения задач — AtLabs' };
+export const metadata = { title: 'Решения задач — StudyFlow' };
 
-import SolutionsClient from './SolutionsClient'; // <- правильный относительный импорт
+import SolutionsClient from './SolutionsClient';
 
-export default function SolutionsPage() {
-    return <SolutionsClient />;
+export default function SolutionsPage(){
+    return <SolutionsClient/>;
 }

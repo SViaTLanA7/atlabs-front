@@ -1,126 +1,63 @@
-// src/app/page.tsx
 import Image from 'next/image';
 import Link from 'next/link';
+import Section from '@/components/ui/Section';
+import HeroTabs from '@/components/HeroTabs';
+import LabCard from '@/components/LabCard';
 
-export default function HomePage() {
+export default function HomePage(){
     return (
         <>
             {/* HERO */}
-            <section className="container-1160 px-4 pt-10 md:pt-14 pb-8">
-                <div className="grid-hero">
-                    {/* Левый столбец */}
+            <Section pad="lg">
+                <div className="grid md:grid-cols-2 gap-8 items-center">
                     <div>
-                        <h1 className="h1 text-[36px] md:text-[56px] leading-[1.05]">
-                            ТВОЙ ПЕРСОНАЛЬНЫЙ<br/>AI-
-                            <span className="inline md:block">АССИСТЕНТ</span><br/>НА КАЖДЫЙ ДЕНЬ
+                        <h1 className="h1 text-[36px] md:text-[48px] leading-[1.05]">
+                            твой персональный<br/>
+                            <span className="block">AI-ассистент для учёбы</span>
                         </h1>
-
-                        <p className="mt-12 max-w-[720px] text-[15px] text-[var(--muted)]">
-                            Решай задачи, принимай решения, развивайся — всё в одном месте.
+                        <p className="mt-3 max-w-[720px] text-[15px] muted">
+                            Решай задачи, пиши конспекты и готовься к сессии быстрее — StudyFlow подскажет и проведёт по шагам.
                         </p>
-
-                        <div className="mt-8 flex flex-wrap items-center gap-10">
-                            <Link href="/register" className="btn-primary rounded-[12px]">Попробовать бесплатно</Link>
-                            <Link href="/login" className="btn-outline rounded-[12px]">Уже есть аккаунт?</Link>
-                            <div className="hidden md:flex items-center gap-8 text-[14px]">
-                <span className="inline-flex items-center gap-8">
-                  <span className="inline-block h-8 w-8 rounded-full bg-green-500" />
-                  5.0 на основе 1000+ сессий
-                </span>
-                            </div>
+                        <div className="mt-6 flex items-center gap-3">
+                            <Link href="/register" className="btn-primary">Попробовать бесплатно</Link>
+                            <a href="#how" className="btn-outline">Как это работает</a>
                         </div>
-
-                        <div className="mt-8 flex flex-wrap gap-10">
-                            <Link className="btn-outline rounded-[12px]" href="/finance">Финансы</Link>
-                            <Link className="btn-outline rounded-[12px]" href="/study">Помощь с учёбой</Link>
-                            <Link className="btn-outline rounded-[12px]" href="/career">Карьера и развитие</Link>
-                        </div>
+                        <HeroTabs/>
                     </div>
 
-                    {/* Правый столбец — иллюстрация */}
-                    <div className="hidden md:block">
-                        <div className="card overflow-hidden p-0">
-                            <Image
-                                src="/atlabs/studyflow-banner.png"
-                                alt=""
-                                width={920}
-                                height={920}
-                                priority
-                                className="w-full h-auto"
-                            />
-                        </div>
+                    <div className="relative">
+                        <Image src="/atlabs/hero-student.svg" alt="" width={520} height={420} className="mx-auto"/>
                     </div>
                 </div>
-            </section>
+            </Section>
 
             {/* ЧЕТЫРЕ ЛАБОРАТОРИИ */}
-            <section className="container-1160 px-4 pb-12">
-                <h2 className="text-[26px] md:text-[28px] font-extrabold tracking-[-0.02em]">
-                    ЧЕТЫРЕ ЛАБОРАТОРИИ — ОДИН ЛИЧНЫЙ КАБИНЕТ
-                </h2>
-
-                <div className="labs-grid mt-6">
-                    {/* 1 */}
-                    <article className="card p-5 grid gap-10">
-                        <div className="flex items-start gap-10">
-                            <Image src="/atlabs/lab-1.svg" alt="" width={36} height={36}/>
-                            <div>
-                                <h3 className="font-semibold">ЛАБОРАТОРИЯ ОБУЧЕНИЯ</h3>
-                                <p className="text-[14px] text-[var(--muted)]">Подборка инструментов, советы и быстрые ответы.</p>
-                            </div>
-                        </div>
-                        <div className="flex gap-10">
-                            <Link href="/learning" className="btn-outline rounded-[12px]">Подробнее</Link>
-                            <Link href="/learning" className="btn-primary rounded-[12px]">В лабораторию</Link>
-                        </div>
-                    </article>
-
-                    {/* 2 */}
-                    <article className="card p-5 grid gap-10">
-                        <div className="flex items-start gap-10">
-                            <Image src="/atlabs/lab-2.svg" alt="" width={36} height={36}/>
-                            <div>
-                                <h3 className="font-semibold">ЛАБОРАТОРИЯ ПСИХОЛОГИИ</h3>
-                                <p className="text-[14px] text-[var(--muted)]">Фокус, помодоро и анти-прокрастинация.</p>
-                            </div>
-                        </div>
-                        <div className="flex gap-10">
-                            <Link href="/psy" className="btn-outline rounded-[12px]">Подробнее</Link>
-                            <Link href="/psy" className="btn-primary rounded-[12px]">В лабораторию</Link>
-                        </div>
-                    </article>
-
-                    {/* 3 */}
-                    <article className="card p-5 grid gap-10">
-                        <div className="flex items-start gap-10">
-                            <Image src="/atlabs/lab-3.svg" alt="" width={36} height={36}/>
-                            <div>
-                                <h3 className="font-semibold">ЛАБОРАТОРИЯ РАЗВИТИЯ</h3>
-                                <p className="text-[14px] text-[var(--muted)]">План обучения и навыков. Ежедневка.</p>
-                            </div>
-                        </div>
-                        <div className="flex gap-10">
-                            <Link href="/growth" className="btn-outline rounded-[12px]">Подробнее</Link>
-                            <Link href="/growth" className="btn-primary rounded-[12px]">В лабораторию</Link>
-                        </div>
-                    </article>
-
-                    {/* 4 */}
-                    <article className="card p-5 grid gap-10">
-                        <div className="flex items-start gap-10">
-                            <Image src="/atlabs/lab-4.svg" alt="" width={36} height={36}/>
-                            <div>
-                                <h3 className="font-semibold">ЛАБОРАТОРИЯ ФИНАНСОВ</h3>
-                                <p className="text-[14px] text-[var(--muted)]">Учимся вести финансы студента.</p>
-                            </div>
-                        </div>
-                        <div className="flex gap-10">
-                            <Link href="/finance" className="btn-outline rounded-[12px]">Подробнее</Link>
-                            <Link href="/finance" className="btn-primary rounded-[12px]">В лабораторию</Link>
-                        </div>
-                    </article>
+            <Section title="ЧЕТЫРЕ ЛАБОРАТОРИИ — ОДИН ЛИЧНЫЙ КАБИНЕТ">
+                <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                    <LabCard icon="/atlabs/lab-1.svg" title="Лаборатория обучения" desc="Готовые мини-конспекты и разборы" foot="Понять за урок"/>
+                    <LabCard icon="/atlabs/lab-2.svg" title="Лаборатория психологии" desc="Фокус, помодоро, анти-прокрастинация" foot="Включить режим"/>
+                    <LabCard icon="/atlabs/lab-3.svg" title="Лаборатория развития" desc="План обучения и навыков" foot="Ежедневка"/>
+                    <LabCard icon="/atlabs/lab-4.svg" title="Лаборатория финансов" desc="Учимся вести финансы студента" foot="Ежедневка"/>
                 </div>
-            </section>
+            </Section>
+
+            {/* КАК ЭТО РАБОТАЕТ */}
+            <Section id="how" title="КАК ЭТО РАБОТАЕТ">
+                <div className="mt-4 grid gap-4 md:grid-cols-3">
+                    <div className="card p-5 flex items-start gap-3">
+                        <Image src="/atlabs/step-1.svg" alt="" width={32} height={32}/>
+                        <div><div className="font-semibold">Вводишь условие</div><div className="muted text-sm">Текстом или фото</div></div>
+                    </div>
+                    <div className="card p-5 flex items-start gap-3">
+                        <Image src="/atlabs/step-2.svg" alt="" width={32} height={32}/>
+                        <div><div className="font-semibold">Мы решаем по шагам</div><div className="muted text-sm">Промежуточные расчёты</div></div>
+                    </div>
+                    <div className="card p-5 flex items-start gap-3">
+                        <Image src="/atlabs/step-3.svg" alt="" width={32} height={32}/>
+                        <div><div className="font-semibold">Даём итог + пояснение</div><div className="muted text-sm">Краткое объяснение</div></div>
+                    </div>
+                </div>
+            </Section>
         </>
     );
 }
