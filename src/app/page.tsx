@@ -1,6 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 
+// относительные импорты (app и components — соседи внутри src)
+import StepCard from "../components/ui/StepCard";
+import ReviewCarousel from "../components/ui/ReviewCarousel";
+import Pricing from "../components/ui/Pricing";
+import FAQ from "../components/ui/FAQ";
+
 export default function HomePage() {
     return (
         <>
@@ -20,7 +26,7 @@ export default function HomePage() {
                         <Link href="#how" className="btn-outline">Как это работает</Link>
                     </div>
 
-                    <div className="chips" style={{marginTop:12}}>
+                    <div className="chips" style={{ marginTop: 12 }}>
                         <span className="chip">Помощь с учёбой</span>
                         <span className="chip">Карьера и навыки</span>
                         <span className="chip">Финансы</span>
@@ -28,20 +34,15 @@ export default function HomePage() {
                 </div>
 
                 <div className="hero-ill">
-                    <div style={{
-                        width: '100%', maxWidth: 520, borderRadius: 24, overflow: 'hidden',
-                        background: 'var(--brand)'
-                    }}>
-                        <div style={{padding: 16}}>
-                            <Image
-                                src="/atlabs/hero-student.svg"
-                                alt="Student"
-                                width={480}
-                                height={420}
-                                style={{display:'block', margin:'18px auto'}}
-                                priority
-                            />
-                        </div>
+                    <div className="hero-card">
+                        <Image
+                            src="/atlabs/hero-student.svg"
+                            alt="Student"
+                            width={520}
+                            height={460}
+                            style={{ display: "block", margin: "18px auto" }}
+                            priority
+                        />
                     </div>
                 </div>
             </section>
@@ -53,7 +54,7 @@ export default function HomePage() {
                 <div className="labs-grid">
                     <article className="card lab-card">
                         <div className="lab-top">
-                            <Image src="/atlabs/lab-1.svg" alt="" width={32} height={32}/>
+                            <Image src="/atlabs/lab-1.svg" alt="" width={32} height={32} />
                             <div>
                                 <div className="lab-title">Лаборатория обучения</div>
                                 <div className="lab-sub">Готовые мини-конспекты и разборы</div>
@@ -64,7 +65,7 @@ export default function HomePage() {
 
                     <article className="card lab-card">
                         <div className="lab-top">
-                            <Image src="/atlabs/lab-2.svg" alt="" width={32} height={32}/>
+                            <Image src="/atlabs/lab-2.svg" alt="" width={32} height={32} />
                             <div>
                                 <div className="lab-title">Лаборатория психологии</div>
                                 <div className="lab-sub">Фокус, помодоро, анти-прокрастинация</div>
@@ -75,7 +76,7 @@ export default function HomePage() {
 
                     <article className="card lab-card">
                         <div className="lab-top">
-                            <Image src="/atlabs/lab-3.svg" alt="" width={32} height={32}/>
+                            <Image src="/atlabs/lab-3.svg" alt="" width={32} height={32} />
                             <div>
                                 <div className="lab-title">Лаборатория развития</div>
                                 <div className="lab-sub">План обучения и навыков</div>
@@ -86,7 +87,7 @@ export default function HomePage() {
 
                     <article className="card lab-card">
                         <div className="lab-top">
-                            <Image src="/atlabs/lab-4.svg" alt="" width={32} height={32}/>
+                            <Image src="/atlabs/lab-4.svg" alt="" width={32} height={32} />
                             <div>
                                 <div className="lab-title">Лаборатория финансов</div>
                                 <div className="lab-sub">Учимся вести финансы студента</div>
@@ -96,6 +97,100 @@ export default function HomePage() {
                     </article>
                 </div>
             </section>
+
+            {/* КАК ЭТО РАБОТАЕТ */}
+            <section id="how" className="section-gray">
+                <div className="container-1160">
+                    <h2>КАК ЭТО РАБОТАЕТ</h2>
+                    <p className="muted">От запроса до готового решения — всего 30 секунд</p>
+
+                    <div className="steps-grid">
+                        <StepCard
+                            icon="/atlabs/step-1.svg"
+                            title="Выбери мини-агента"
+                            text="Хочешь написать текст, решить задачу или получить совет? Выбери подходящего помощника."
+                            cta={{ href: "/register", label: "Попробовать бесплатно" }}
+                        />
+                        <StepCard
+                            icon="/atlabs/step-2.svg"
+                            title="Загрузи задание или вопрос"
+                            text="Напиши вопрос, вставь задание или фото. Чем точнее запрос, тем лучше результат."
+                            cta={{ href: "/solutions", label: "Попробовать бесплатно" }}
+                        />
+                        <StepCard
+                            icon="/atlabs/step-3.svg"
+                            title="Получи готовый результат"
+                            text="AI анализирует запрос и даёт понятное решение без воды — с объяснениями."
+                            cta={{ href: "/solutions", label: "Попробовать бесплатно" }}
+                        />
+                        <StepCard
+                            icon="/atlabs/step-4.svg"
+                            title="Продолжай общение"
+                            text="Уточняй, проси примеры, формируй конспект — диалогом быстрее и проще."
+                            cta={{ href: "/chat", label: "Попробовать бесплатно" }}
+                        />
+                    </div>
+                </div>
+            </section>
+
+            {/* ПРОМО-БАННЕР */}
+            <section className="container-1160 promo">
+                <div className="promo-box">
+                    <div className="promo-text">
+                        <h3>ПОПРОБУЙТЕ ПРЯМО СЕЙЧАС!</h3>
+                        <p>
+                            Получите готовое решение или совет через 30 секунд. Без подписки — первые 100 токенов бесплатно.
+                        </p>
+                    </div>
+                    <form className="promo-form" action="/solutions">
+                        <input
+                            name="q"
+                            placeholder="Опишите задачу или тему — например: «Решите квадратное уравнение x²-5x+6=0»"
+                        />
+                        <button className="btn-primary" type="submit">Попробуй нашего ассистента</button>
+                    </form>
+                    <div className="promo-ill">
+                        <Image src="/atlabs/cta-guy.svg" alt="" width={200} height={200} />
+                    </div>
+                </div>
+            </section>
+
+            {/* ОТЗЫВЫ */}
+            <section className="container-1160 reviews">
+                <h2>ОТЗЫВЫ</h2>
+                <ReviewCarousel
+                    items={[
+                        {
+                            name: "Анна",
+                            role: "Студент",
+                            avatar: "/atlabs/user.svg",
+                            badge: "Лаборатория обучения",
+                            rating: 5,
+                            text: "Думала, не успею к экзамену. Но всё сдала и спокойно спала впервые за семестр.",
+                        },
+                        {
+                            name: "Никита",
+                            role: "Студент",
+                            avatar: "/atlabs/user.svg",
+                            badge: "Лаборатория психологии",
+                            rating: 5,
+                            text: "Помодоро + план на неделю — и я впервые не сорвался с дедлайнами.",
+                        },
+                        {
+                            name: "Алёна",
+                            role: "Студент",
+                            avatar: "/atlabs/user.svg",
+                            badge: "Лаборатория развития",
+                            rating: 5,
+                            text: "Конспекты по темам экономят часы. Учиться стало реально проще.",
+                        },
+                    ]}
+                />
+            </section>
+
+            {/* ТАРИФЫ + FAQ */}
+            <Pricing />
+            <FAQ />
         </>
     );
 }
