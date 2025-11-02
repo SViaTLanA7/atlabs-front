@@ -1,83 +1,111 @@
-// src/components/Pricing.tsx
 "use client";
 
+import { useState } from "react";
+import Link from "next/link";
+
 type Plan = {
-    name: string;
+    id: string;
+    title: string;
+    subtitle: string;
     price: string;
-    note?: string;
-    badge?: string;
-    features: string[];
-    best?: boolean;
+    period: string;
+    tokens: string;
+    bullets: string[];
+    highlight?: boolean;
 };
 
-const plans: Plan[] = [
+const PLANS: Plan[] = [
     {
-        name: "Базовый",
+        id: "starter",
+        title: "Базовый",
+        subtitle: "Для пробы и быстрых задач",
+        price: "0 ₽",
+        period: "бесплатно",
+        tokens: "100 токенов",
+        bullets: ["Мини-агенты для учёбы", "Решения и конспекты", "История запросов"],
+    },
+    {
+        id: "student",
+        title: "Студент",
+        subtitle: "На каждый день учёбы",
         price: "330 ₽",
-        note: "100 токенов",
-        badge: "-17%",
-        features: ["Решения задач", "Мини-конспекты", "Чат-подсказки"],
+        period: "в месяц",
+        tokens: "1000 токенов",
+        bullets: ["Все мини-агенты", "Безлимит по конспектам", "Приоритетные ответы"],
+        highlight: true,
     },
     {
-        name: "Стандарт",
+        id: "pro",
+        title: "Про",
+        subtitle: "Максимум возможностей",
         price: "820 ₽",
-        badge: "-25%",
-        best: true,
-        features: ["Всё из Базового", "Ежедневные задания", "Приоритет поддержки"],
-    },
-    {
-        name: "Премиум",
-        price: "2 890 ₽",
-        badge: "-29%",
-        features: ["Безлимит токенов", "Готовые шаблоны", "Доступ к mini-app Telegram"],
+        period: "в месяц",
+        tokens: "безлимит*",
+        bullets: ["Доступ ко всем лабораториям", "Загрузка файлов", "Экспорт PDF/Docx"],
     },
 ];
 
 export default function Pricing() {
+    const [selected, setSelected] = useState<string>(PLANS[1].id);
+
     return (
-        <div className="grid md:grid-cols-3 gap-4">
-            {plans.map((p) => (
-                <article
-                    key={p.name}
-                    className={`card p-5 relative ${
-                        p.best ? "ring-2 ring-white/40" : ""
-                    }`}
-                >
-                    {p.best && (
-                        <span className="absolute -top-3 left-5 rounded-full bg-white text-[oklch(0.5_0.21_300)] px-2 py-1 text-[11px] font-semibold">
-              Рекомендуем
-            </span>
-                    )}
+        <section className="pricing">
+            <header className="pricing-head">
+                <h2>ОТКРОЙ ПОЛНЫЙ ДОСТУП К StudyFlow</h2>
+                <p className="muted">При регистрации дарим 100 токенов — хватит на первые решения</p>
+            </header>
 
-                    <div className="flex items-center justify-between">
-                        <h3 className="text-white font-semibold">{p.name}</h3>
-                        {p.badge && (
-                            <span className="rounded-full bg-white/10 text-white px-2 py-1 text-xs border border-white/15">
-                {p.badge}
-              </span>
-                        )}
-                    </div>
-
-                    <div className="text-[28px] font-extrabold mt-2">{p.price}</div>
-                    {p.note && <div className="text-sm opacity-70">{p.note}</div>}
-
-                    <ul className="mt-4 space-y-1 text-[14px]">
-                        {p.features.map((f) => (
-                            <li key={f}>• {f}</li>
-                        ))}
-                    </ul>
-
-                    <a
-                        href="/checkout?plan="
-                        onClick={(e) => {
-                            e.currentTarget.href = `/checkout?plan=${encodeURIComponent(p.name)}`;
-                        }}
-                        className="btn btn-primary mt-4 w-full inline-flex justify-center rounded-[10px]"
+            <div className="pricing-grid container-1160">
+                {PLANS.map((p) => (
+                    <article
+                        key={p.id}
+                        className={`card price-card ${p.highlight ? "price-card--hot" : ""}`}
                     >
-                        Оформить подписку
-                    </a>
-                </article>
-            ))}
-        </div>
+                        <div className="price-top">
+                            <div className="price-title">{p.title}</div>
+                            <div className="price-sub">{p.subtitle}</div>
+                        </div>
+
+                        <div className="price-tag">
+                            <div className="price">{p.price}</div>
+                            <div className="period">{p.period}</div>
+                        </div>
+
+                        <div className="price-meta">
+                            <div className="tokens">{p.tokens}</div>
+                        </div>
+
+                        <ul className="price-list">
+                            {p.bullets.map((b, i) => (
+                                <li key={i}>{b}</li>
+                            ))}
+                        </ul>
+
+                        <label className="price-radio">
+                            <input
+                                type="radio"
+                                name="plan"
+                                value={p.id}
+                                checked={selected === p.id}
+                                onChange={() => setSelected(p.id)}
+                            />
+                            <span>Выбрать тариф</span>
+                        </label>
+                    </article>
+                ))}
+            </div>
+
+            <div className="pricing-cta">
+                <Link
+                    href={`/pricing?plan=${selected}`}
+                    className="btn-primary"
+                >
+                    Оформить подписку
+                </Link>
+                <div className="muted text-[13px]">
+                    * Безлимит действует по fair-use: система предупреждает при сверхнагрузке.
+                </div>
+            </div>
+        </section>
     );
 }
