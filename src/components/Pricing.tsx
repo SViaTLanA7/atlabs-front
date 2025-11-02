@@ -96,13 +96,10 @@ export default function Pricing() {
             </div>
 
             <div className="pricing-cta">
-                <Link
-                    href={`/pricing?plan=${selected}`}
-                    className="btn-primary"
-                >
+                <Link href={`/pricing?plan=${selected}`} className="btn-primary">
                     Оформить подписку
                 </Link>
-                <div className="muted text-[13px]">
+                <div className="muted text-[13px]" aria-live="polite">
                     * Безлимит действует по fair-use: система предупреждает при сверхнагрузке.
                 </div>
             </div>
