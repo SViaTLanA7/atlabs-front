@@ -1,15 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import Header from "@/components/Header";
 
 export default function HomePage() {
     return (
         <>
-            <Header />
-
             {/* HERO */}
             <section className="container-1160 hero">
-                {/* text */}
                 <div>
                     <h1 className="h1 title">
                         твой персональный<br />AI-ассистент для учёбы
@@ -31,7 +27,6 @@ export default function HomePage() {
                     </div>
                 </div>
 
-                {/* illustration on purple */}
                 <div className="hero-ill">
                     <div style={{
                         width: '100%', maxWidth: 520, borderRadius: 24, overflow: 'hidden',
@@ -56,7 +51,6 @@ export default function HomePage() {
                 <h2>ЧЕТЫРЕ ЛАБОРАТОРИИ — ОДИН ЛИЧНЫЙ КАБИНЕТ</h2>
 
                 <div className="labs-grid">
-                    {/* 1 */}
                     <article className="card lab-card">
                         <div className="lab-top">
                             <Image src="/atlabs/lab-1.svg" alt="" width={32} height={32}/>
@@ -68,7 +62,6 @@ export default function HomePage() {
                         <div className="lab-foot">Понять за урок</div>
                     </article>
 
-                    {/* 2 */}
                     <article className="card lab-card">
                         <div className="lab-top">
                             <Image src="/atlabs/lab-2.svg" alt="" width={32} height={32}/>
@@ -80,7 +73,6 @@ export default function HomePage() {
                         <div className="lab-foot">Включить режим</div>
                     </article>
 
-                    {/* 3 */}
                     <article className="card lab-card">
                         <div className="lab-top">
                             <Image src="/atlabs/lab-3.svg" alt="" width={32} height={32}/>
@@ -92,7 +84,6 @@ export default function HomePage() {
                         <div className="lab-foot">Ежедневка</div>
                     </article>
 
-                    {/* 4 */}
                     <article className="card lab-card">
                         <div className="lab-top">
                             <Image src="/atlabs/lab-4.svg" alt="" width={32} height={32}/>
@@ -105,8 +96,6 @@ export default function HomePage() {
                     </article>
                 </div>
             </section>
-
-            {/* ниже можно постепенно переносить блоки: #how, CTA-баннер, отзывы, тарифы, FAQ */}
         </>
     );
 }

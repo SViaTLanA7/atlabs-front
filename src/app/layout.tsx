@@ -1,19 +1,22 @@
-import './globals.css';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import type { Metadata } from "next";
+import "./globals.css";
+import Header from "@/components/Header";
 
-export const metadata = {
-    title: 'StudyFlow',
-    description: 'Твой персональный AI-ассистент для учёбы',
+export const metadata: Metadata = {
+    title: {
+        default: "StudyFlow",
+        template: "%s — StudyFlow",
+    },
+    description:
+        "Твой персональный AI-ассистент для учёбы: решения задач, конспекты, подготовка к сессии.",
 };
 
-export default function RootLayout({children}:{children:React.ReactNode}){
+export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="ru">
         <body>
-        <Header/>
-        <main>{children}</main>
-        <Footer/>
+        <Header />
+        {children}
         </body>
         </html>
     );

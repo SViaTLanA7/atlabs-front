@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import Image from 'next/image';
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Header() {
     return (
@@ -10,7 +10,7 @@ export default function Header() {
                 <div className="nav-left">
                     <Link href="/" className="flex items-center gap-2 font-extrabold">
                         <Image src="/brand/logo.svg" alt="" width={26} height={26} />
-                        <span>AtLabs</span>
+                        <span>StudyFlow</span>
                     </Link>
 
                     <nav className="nav-menu">
