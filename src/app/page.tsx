@@ -1,63 +1,112 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import Section from '@/components/ui/Section';
-import HeroTabs from '@/components/HeroTabs';
-import LabCard from '@/components/LabCard';
+import Image from "next/image";
+import Link from "next/link";
+import Header from "@/components/Header";
 
-export default function HomePage(){
+export default function HomePage() {
     return (
         <>
+            <Header />
+
             {/* HERO */}
-            <Section pad="lg">
-                <div className="grid md:grid-cols-2 gap-8 items-center">
-                    <div>
-                        <h1 className="h1 text-[36px] md:text-[48px] leading-[1.05]">
-                            твой персональный<br/>
-                            <span className="block">AI-ассистент для учёбы</span>
-                        </h1>
-                        <p className="mt-3 max-w-[720px] text-[15px] muted">
-                            Решай задачи, пиши конспекты и готовься к сессии быстрее — StudyFlow подскажет и проведёт по шагам.
-                        </p>
-                        <div className="mt-6 flex items-center gap-3">
-                            <Link href="/register" className="btn-primary">Попробовать бесплатно</Link>
-                            <a href="#how" className="btn-outline">Как это работает</a>
+            <section className="container-1160 hero">
+                {/* text */}
+                <div>
+                    <h1 className="h1 title">
+                        твой персональный<br />AI-ассистент для учёбы
+                    </h1>
+
+                    <p className="hero-p">
+                        Решай задачи, пиши конспекты и готовься к сессии быстрее — StudyFlow подскажет и проведёт по шагам.
+                    </p>
+
+                    <div className="hero-cta">
+                        <Link href="/register" className="btn-primary">Попробовать бесплатно</Link>
+                        <Link href="#how" className="btn-outline">Как это работает</Link>
+                    </div>
+
+                    <div className="chips" style={{marginTop:12}}>
+                        <span className="chip">Помощь с учёбой</span>
+                        <span className="chip">Карьера и навыки</span>
+                        <span className="chip">Финансы</span>
+                    </div>
+                </div>
+
+                {/* illustration on purple */}
+                <div className="hero-ill">
+                    <div style={{
+                        width: '100%', maxWidth: 520, borderRadius: 24, overflow: 'hidden',
+                        background: 'var(--brand)'
+                    }}>
+                        <div style={{padding: 16}}>
+                            <Image
+                                src="/atlabs/hero-student.svg"
+                                alt="Student"
+                                width={480}
+                                height={420}
+                                style={{display:'block', margin:'18px auto'}}
+                                priority
+                            />
                         </div>
-                        <HeroTabs/>
-                    </div>
-
-                    <div className="relative">
-                        <Image src="/atlabs/hero-student.svg" alt="" width={520} height={420} className="mx-auto"/>
                     </div>
                 </div>
-            </Section>
+            </section>
 
-            {/* ЧЕТЫРЕ ЛАБОРАТОРИИ */}
-            <Section title="ЧЕТЫРЕ ЛАБОРАТОРИИ — ОДИН ЛИЧНЫЙ КАБИНЕТ">
-                <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                    <LabCard icon="/atlabs/lab-1.svg" title="Лаборатория обучения" desc="Готовые мини-конспекты и разборы" foot="Понять за урок"/>
-                    <LabCard icon="/atlabs/lab-2.svg" title="Лаборатория психологии" desc="Фокус, помодоро, анти-прокрастинация" foot="Включить режим"/>
-                    <LabCard icon="/atlabs/lab-3.svg" title="Лаборатория развития" desc="План обучения и навыков" foot="Ежедневка"/>
-                    <LabCard icon="/atlabs/lab-4.svg" title="Лаборатория финансов" desc="Учимся вести финансы студента" foot="Ежедневка"/>
-                </div>
-            </Section>
+            {/* ЛАБОРАТОРИИ */}
+            <section className="container-1160 labs">
+                <h2>ЧЕТЫРЕ ЛАБОРАТОРИИ — ОДИН ЛИЧНЫЙ КАБИНЕТ</h2>
 
-            {/* КАК ЭТО РАБОТАЕТ */}
-            <Section id="how" title="КАК ЭТО РАБОТАЕТ">
-                <div className="mt-4 grid gap-4 md:grid-cols-3">
-                    <div className="card p-5 flex items-start gap-3">
-                        <Image src="/atlabs/step-1.svg" alt="" width={32} height={32}/>
-                        <div><div className="font-semibold">Вводишь условие</div><div className="muted text-sm">Текстом или фото</div></div>
-                    </div>
-                    <div className="card p-5 flex items-start gap-3">
-                        <Image src="/atlabs/step-2.svg" alt="" width={32} height={32}/>
-                        <div><div className="font-semibold">Мы решаем по шагам</div><div className="muted text-sm">Промежуточные расчёты</div></div>
-                    </div>
-                    <div className="card p-5 flex items-start gap-3">
-                        <Image src="/atlabs/step-3.svg" alt="" width={32} height={32}/>
-                        <div><div className="font-semibold">Даём итог + пояснение</div><div className="muted text-sm">Краткое объяснение</div></div>
-                    </div>
+                <div className="labs-grid">
+                    {/* 1 */}
+                    <article className="card lab-card">
+                        <div className="lab-top">
+                            <Image src="/atlabs/lab-1.svg" alt="" width={32} height={32}/>
+                            <div>
+                                <div className="lab-title">Лаборатория обучения</div>
+                                <div className="lab-sub">Готовые мини-конспекты и разборы</div>
+                            </div>
+                        </div>
+                        <div className="lab-foot">Понять за урок</div>
+                    </article>
+
+                    {/* 2 */}
+                    <article className="card lab-card">
+                        <div className="lab-top">
+                            <Image src="/atlabs/lab-2.svg" alt="" width={32} height={32}/>
+                            <div>
+                                <div className="lab-title">Лаборатория психологии</div>
+                                <div className="lab-sub">Фокус, помодоро, анти-прокрастинация</div>
+                            </div>
+                        </div>
+                        <div className="lab-foot">Включить режим</div>
+                    </article>
+
+                    {/* 3 */}
+                    <article className="card lab-card">
+                        <div className="lab-top">
+                            <Image src="/atlabs/lab-3.svg" alt="" width={32} height={32}/>
+                            <div>
+                                <div className="lab-title">Лаборатория развития</div>
+                                <div className="lab-sub">План обучения и навыков</div>
+                            </div>
+                        </div>
+                        <div className="lab-foot">Ежедневка</div>
+                    </article>
+
+                    {/* 4 */}
+                    <article className="card lab-card">
+                        <div className="lab-top">
+                            <Image src="/atlabs/lab-4.svg" alt="" width={32} height={32}/>
+                            <div>
+                                <div className="lab-title">Лаборатория финансов</div>
+                                <div className="lab-sub">Учимся вести финансы студента</div>
+                            </div>
+                        </div>
+                        <div className="lab-foot">Ежедневка</div>
+                    </article>
                 </div>
-            </Section>
+            </section>
+
+            {/* ниже можно постепенно переносить блоки: #how, CTA-баннер, отзывы, тарифы, FAQ */}
         </>
     );
 }
