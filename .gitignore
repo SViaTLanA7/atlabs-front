@@ -13,3 +13,9 @@ coverage/
 # Env / local
 .env
 .env.*
+.next
+.idea
+*.log
+*.local
+.env*
+ssh-keygen*
