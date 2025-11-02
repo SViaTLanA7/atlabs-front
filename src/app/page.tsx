@@ -1,17 +1,14 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import Header from '@/components/Header';
-import HeroTabs from '@/components/HeroTabs';
+import Image from "next/image";
+import Link from "next/link";
 
 export default function HomePage() {
     return (
         <>
-            <Header/>
-
             {/* HERO */}
-            <section className="container-1160 px-4 pt-8 md:pt-12 pb-4 md:pb-6 text-center">
-                <h1 className="h1 text-[36px] md:text-[44px] leading-[1.12]">
-                    твой персональный<br/>
+            <section className="container-1160 px-4 pt-10 md:pt-14 pb-8 text-center">
+                <h1 className="h1 text-[36px] md:text-[44px] leading-[1.1]">
+                    твой персональный
+                    <br />
                     <span className="block">AI-ассистент для учёбы</span>
                 </h1>
 
@@ -20,47 +17,86 @@ export default function HomePage() {
                 </p>
 
                 <div className="mt-6 flex items-center justify-center gap-3">
-                    <Link href="/solutions" className="btn-primary rounded-[12px] py-2.5">Попробовать бесплатно</Link>
-                    <a href="#how" className="btn-outline rounded-[12px] py-2.5">Как это работает</a>
+                    <Link href="/solutions" className="btn-primary rounded-[12px]">
+                        Попробовать бесплатно
+                    </Link>
+                    <a href="#how" className="btn-outline rounded-[12px]">
+                        Как это работает
+                    </a>
                 </div>
 
-                <HeroTabs/>
+                {/* чипсы */}
+                <div className="mt-4 flex flex-wrap items-center justify-center gap-6 text-[13px]">
+                    <span className="chip">Помощь с учёбой</span>
+                    <span className="chip">Карьера и навыки</span>
+                    <span className="chip">Финансы</span>
+                </div>
             </section>
 
-            {/* ЛАБОРАТОРИИ */}
+            {/* ЧЕТЫРЕ ЛАБОРАТОРИИ */}
             <section className="container-1160 px-4 py-6 md:py-8">
                 <h2 className="section-title">ЧЕТЫРЕ ЛАБОРАТОРИИ — ОДИН ЛИЧНЫЙ КАБИНЕТ</h2>
 
-                <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                    <Lab icon="/atlabs/lab-1.svg" title="Лаборатория обучения"
-                         desc="Готовые мини-конспекты и разборы" foot="Понять за урок" />
-                    <Lab icon="/atlabs/lab-2.svg" title="Лаборатория психологии"
-                         desc="Фокус, помодоро, анти-прокрастинация" foot="Включить режим" />
-                    <Lab icon="/atlabs/lab-3.svg" title="Лаборатория развития"
-                         desc="План обучения и навыков" foot="Ежедневка" />
-                    <Lab icon="/atlabs/lab-4.svg" title="Лаборатория финансов"
-                         desc="Учимся вести финансы студента" foot="Ежедневка" />
+                <div className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                    <LabCard
+                        icon="/atlabs/lab-1.svg"
+                        title="Лаборатория обучения"
+                        desc="Готовые мини-конспекты и разборы"
+                        foot="Понять за урок"
+                    />
+                    <LabCard
+                        icon="/atlabs/lab-2.svg"
+                        title="Лаборатория психологии"
+                        desc="Фокус, помодоро, анти-прокрастинация"
+                        foot="Включить режим"
+                    />
+                    <LabCard
+                        icon="/atlabs/lab-3.svg"
+                        title="Лаборатория развития"
+                        desc="План обучения и навыков"
+                        foot="Ежедневка"
+                    />
+                    <LabCard
+                        icon="/atlabs/lab-4.svg"
+                        title="Лаборатория финансов"
+                        desc="Учимся вести финансы студента"
+                        foot="Ежедневка"
+                    />
                 </div>
             </section>
 
-            {/* КАК ЭТО РАБОТАЕТ */}
-            <section id="how" className="container-1160 px-4 py-8 md:py-10">
+            {/* КАК ЭТО РАБОТАЕТ (якорь под кнопку) */}
+            <section id="how" className="container-1160 px-4 py-8">
                 <h2 className="section-title">КАК ЭТО РАБОТАЕТ</h2>
-                <div className="mt-5 grid gap-4 md:grid-cols-3">
-                    <Step n="1" title="Загрузи условие" text="Текст, фото, файл — как удобно." />
-                    <Step n="2" title="Получай разбор" text="Решение по шагам и мини-конспект." />
-                    <Step n="3" title="Сохрани результат" text="В историю и в избранное." />
+                <div className="mt-4 grid gap-4 md:grid-cols-3">
+                    <StepCard step="1" title="Загружаешь условие">
+                        Фото/текст задачи или тема — что удобно.
+                    </StepCard>
+                    <StepCard step="2" title="Получаешь разбор">
+                        Чёткие шаги решения и пояснения.
+                    </StepCard>
+                    <StepCard step="3" title="Сохраняешь конспект">
+                        Сформируем мини-конспект и добавим в историю.
+                    </StepCard>
                 </div>
             </section>
-
-            {/* Подвал уже есть в layout — оставляю без дубликатов */}
         </>
     );
 }
 
-function Lab({icon, title, desc, foot}:{icon:string; title:string; desc:string; foot:string}) {
+function LabCard({
+                     icon,
+                     title,
+                     desc,
+                     foot,
+                 }: {
+    icon: string;
+    title: string;
+    desc: string;
+    foot: string;
+}) {
     return (
-        <article className="card p-5 hover:shadow-md transition">
+        <article className="card p-5 hover:shadow-md transition-shadow">
             <div className="flex items-start gap-3">
                 <Image src={icon} alt="" width={32} height={32} />
                 <div>
@@ -73,12 +109,16 @@ function Lab({icon, title, desc, foot}:{icon:string; title:string; desc:string; 
     );
 }
 
-function Step({n, title, text}:{n:string; title:string; text:string}) {
+function StepCard({ step, title, children }: { step: string; title: string; children: React.ReactNode }) {
     return (
-        <div className="card p-5">
-            <div className="text-[12px] font-semibold opacity-60">Шаг {n}</div>
-            <h3 className="mt-1 font-semibold">{title}</h3>
-            <p className="mt-1 text-[14px] opacity-70">{text}</p>
-        </div>
+        <article className="card p-5">
+            <div className="flex items-start gap-3">
+                <div className="step-dot">{step}</div>
+                <div>
+                    <h4 className="font-semibold">{title}</h4>
+                    <p className="text-[14px] opacity-70">{children}</p>
+                </div>
+            </div>
+        </article>
     );
 }
