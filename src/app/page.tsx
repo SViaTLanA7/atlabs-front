@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-// относительные импорты (app и components — соседи внутри src)
+// ВАЖНО: относительные пути (без алиасов).
 import StepCard from "../components/ui/StepCard";
 import ReviewCarousel from "../components/ui/ReviewCarousel";
 import Pricing from "../components/ui/Pricing";

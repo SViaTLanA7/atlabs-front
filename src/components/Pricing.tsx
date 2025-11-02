@@ -99,7 +99,7 @@ export default function Pricing() {
                 <Link href={`/pricing?plan=${selected}`} className="btn-primary">
                     Оформить подписку
                 </Link>
-                <div className="muted text-[13px]" aria-live="polite">
+                <div className="muted text-[13px]">
                     * Безлимит действует по fair-use: система предупреждает при сверхнагрузке.
                 </div>
             </div>
