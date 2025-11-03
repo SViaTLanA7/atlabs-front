@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+// src/app/layout.tsx
 import "./globals.css";
+import type { Metadata } from "next";
 
-// ВНИМАНИЕ: только относительные импорты
 import Header from "../components/ui/Header";
 import Footer from "../components/ui/Footer";
+import ScrollFX from "../components/ScrollFX";
 
 export const metadata: Metadata = {
     title: {
@@ -12,14 +13,25 @@ export const metadata: Metadata = {
     },
     description:
         "Решай задачи, пиши конспекты и готовься к сессии быстрее — StudyFlow подскажет и проведёт по шагам.",
+    icons: {
+        icon: "/favicon.ico",
+        apple: "/apple-touch-icon.png",
+    },
+    manifest: "/site.webmanifest",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+                                       children,
+                                   }: {
+    children: React.ReactNode;
+}) {
     return (
         <html lang="ru">
         <body>
         <Header />
-        {children}
+        {/* Плавный скролл + лёгкий параллакс для элементов с data-parallax */}
+        <ScrollFX />
+        <main>{children}</main>
         <Footer />
         </body>
         </html>
