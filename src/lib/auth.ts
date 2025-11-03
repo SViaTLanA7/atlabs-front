@@ -1,57 +1,36 @@
 // src/lib/auth.ts
-import NextAuth, { type DefaultSession } from "next-auth";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { prisma } from "../lib/prisma";
-import EmailProvider from "next-auth/providers/email";
-// при желании можно включить OAuth провайдеры
-// import Google from "next-auth/providers/google";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import type { NextAuthOptions } from "next-auth";
+import GitHubProvider from "next-auth/providers/github";
+// при желании подключай ещё провайдеры (Google и т.д.)
+import { prisma } from "./prisma";
 
-declare module "next-auth" {
-    interface Session {
-        user: {
-            id: string;
-            plan: "FREE" | "STUDENT" | "PRO";
-            stripeCustomerId?: string | null;
-        } & DefaultSession["user"];
-    }
-    interface User {
-        plan: "FREE" | "STUDENT" | "PRO";
-        stripeCustomerId?: string | null;
-    }
-}
-
-export const {
-    handlers: { GET, POST },
-    auth,
-    signIn,
-    signOut,
-} = NextAuth({
-    debug: process.env.NODE_ENV === "development",
+export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
-    session: { strategy: "database" },
-    trustHost: true,
+    session: { strategy: "jwt" },
+
     providers: [
-        EmailProvider({
-            server: {
-                host: process.env.EMAIL_SERVER_HOST!,
-                port: Number(process.env.EMAIL_SERVER_PORT || 587),
-                auth: {
-                    user: process.env.EMAIL_SERVER_USER!,
-                    pass: process.env.EMAIL_SERVER_PASSWORD!,
-                },
-            },
-            from: process.env.EMAIL_FROM!,
+        GitHubProvider({
+            clientId: process.env.GITHUB_ID ?? "",
+            clientSecret: process.env.GITHUB_SECRET ?? "",
         }),
-        // Google({ clientId: ..., clientSecret: ... })
+        // GoogleProvider({ clientId: ..., clientSecret: ... }),
     ],
+
+    pages: {
+        signIn: "/login",
+    },
+
     callbacks: {
-        async session({ session, user }) {
-            if (session.user) {
-                (session.user as any).id = user.id;
-                (session.user as any).plan = user.plan;
-                (session.user as any).stripeCustomerId = user.stripeCustomerId ?? null;
+        async jwt({ token, user }) {
+            if (user) token.uid = user.id;
+            return token;
+        },
+        async session({ session, token }) {
+            if (token?.uid && session.user) {
+                (session.user as any).id = token.uid;
             }
             return session;
         },
     },
-});
+};
