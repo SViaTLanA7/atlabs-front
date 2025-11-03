@@ -1,6 +1,6 @@
 // src/app/pricing/page.tsx
 import type { Metadata } from "next";
-import Pricing from "@/components/Pricing";
+import Pricing from "@/components/ui/Pricing";
 
 export const metadata: Metadata = {
     title: "Тарифы — StudyFlow",

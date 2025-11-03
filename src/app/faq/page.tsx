@@ -1,7 +1,7 @@
 
 export const metadata = { title: 'FAQ — ответы на вопросы' };
 
-import FAQ from '@/components/FAQ';
+import FAQ from '@/components/ui/FAQ';
 
 export default function FAQPage() {
     return (

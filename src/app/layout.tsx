@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/Header";
+
+// ВНИМАНИЕ: только относительные импорты
+import Header from "../components/ui/Header";
+import Footer from "../components/ui/Footer";
 
 export const metadata: Metadata = {
     title: {
-        default: "StudyFlow",
+        default: "StudyFlow — твой персональный AI-ассистент для учёбы",
         template: "%s — StudyFlow",
     },
     description:
-        "Твой персональный AI-ассистент для учёбы: решения задач, конспекты, подготовка к сессии.",
+        "Решай задачи, пиши конспекты и готовься к сессии быстрее — StudyFlow подскажет и проведёт по шагам.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -17,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <body>
         <Header />
         {children}
+        <Footer />
         </body>
         </html>
     );
