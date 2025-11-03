@@ -1,7 +1,10 @@
+// src/app/faq/page.tsx
+import type { Metadata } from "next";
+import FAQ from "../../components/ui/FAQ";
 
-export const metadata = { title: 'FAQ — ответы на вопросы' };
-
-import FAQ from '@/components/ui/FAQ';
+export const metadata: Metadata = {
+    title: "FAQ — ответы на вопросы",
+};
 
 export default function FAQPage() {
     return (
