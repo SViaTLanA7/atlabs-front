@@ -17,7 +17,7 @@ export default function HomePage() {
             <section className="container-1160 hero">
                 <div>
                     <h1 className="h1 title">
-                        твой персональный<br/>AI-ассистент для учёбы
+                        твой персональный<br />AI-ассистент для учёбы
                     </h1>
                     <p className="hero-p">
                         Решай задачи, пиши конспекты и готовься к сессии быстрее — StudyFlow подскажет и проведёт по шагам.
@@ -40,6 +40,7 @@ export default function HomePage() {
                             alt="Student"
                             width={520}
                             height={460}
+                            sizes="(max-width: 1024px) 88vw, 520px"
                             style={{ display: "block", margin: "18px auto" }}
                             priority
                         />
@@ -53,7 +54,7 @@ export default function HomePage() {
                 <div className="labs-grid">
                     <article className="card lab-card">
                         <div className="lab-top">
-                            <Image src="/atlabs/lab-1.svg" alt="" width={32} height={32}/>
+                            <Image src="/atlabs/lab-1.svg" alt="" width={32} height={32} />
                             <div>
                                 <div className="lab-title">Лаборатория обучения</div>
                                 <div className="lab-sub">Готовые мини-конспекты и разборы</div>
@@ -64,7 +65,7 @@ export default function HomePage() {
 
                     <article className="card lab-card">
                         <div className="lab-top">
-                            <Image src="/atlabs/lab-2.svg" alt="" width={32} height={32}/>
+                            <Image src="/atlabs/lab-2.svg" alt="" width={32} height={32} />
                             <div>
                                 <div className="lab-title">Лаборатория психологии</div>
                                 <div className="lab-sub">Фокус, помодоро, анти-прокрастинация</div>
@@ -75,7 +76,7 @@ export default function HomePage() {
 
                     <article className="card lab-card">
                         <div className="lab-top">
-                            <Image src="/atlabs/lab-3.svg" alt="" width={32} height={32}/>
+                            <Image src="/atlabs/lab-3.svg" alt="" width={32} height={32} />
                             <div>
                                 <div className="lab-title">Лаборатория развития</div>
                                 <div className="lab-sub">План обучения и навыков</div>
@@ -86,7 +87,7 @@ export default function HomePage() {
 
                     <article className="card lab-card">
                         <div className="lab-top">
-                            <Image src="/atlabs/lab-4.svg" alt="" width={32} height={32}/>
+                            <Image src="/atlabs/lab-4.svg" alt="" width={32} height={32} />
                             <div>
                                 <div className="lab-title">Лаборатория финансов</div>
                                 <div className="lab-sub">Учимся вести финансы студента</div>
@@ -137,7 +138,9 @@ export default function HomePage() {
                 <div className="promo-box">
                     <div className="promo-text">
                         <h3>ПОПРОБУЙТЕ ПРЯМО СЕЙЧАС!</h3>
-                        <p>Получите готовое решение или совет через 30 секунд. Без подписки — первые 100 токенов бесплатно.</p>
+                        <p>
+                            Получите готовое решение или совет через 30 секунд. Без подписки — первые 100 токенов бесплатно.
+                        </p>
                     </div>
                     <form className="promo-form" action="/solutions">
                         <input
@@ -147,7 +150,13 @@ export default function HomePage() {
                         <button className="btn-primary" type="submit">Попробуй нашего ассистента</button>
                     </form>
                     <div className="promo-ill">
-                        <Image src="/atlabs/cta-guy.svg" alt="" width={200} height={200}/>
+                        <Image
+                            src="/atlabs/cta-guy.svg"
+                            alt=""
+                            width={200}
+                            height={200}
+                            sizes="(max-width: 1024px) 40vw, 200px"
+                        />
                     </div>
                 </div>
             </section>
