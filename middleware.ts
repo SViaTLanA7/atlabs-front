@@ -1,34 +1,20 @@
 // src/middleware.ts
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
+import { auth } from "./lib/auth";
 
-export function middleware(request: NextRequest) {
-    const { pathname } = request.nextUrl;
-
-    // пропускаем публичные маршруты
-    const isPublic =
-        pathname === "/" ||
-        pathname.startsWith("/login") ||
-        pathname.startsWith("/register") ||
-        pathname.startsWith("/api");
-
-    if (isPublic) {
-        return NextResponse.next();
+export async function middleware(req: NextRequest) {
+    const url = new URL(req.url);
+    if (url.pathname.startsWith("/chat") || url.pathname.startsWith("/dashboard")) {
+        const session = await auth();
+        if (!session) {
+            const signInUrl = new URL("/login", url.origin);
+            signInUrl.searchParams.set("callbackUrl", url.pathname);
+            return NextResponse.redirect(signInUrl);
+        }
     }
-
-    // читаем куку токена
-    const token = request.cookies.get("token")?.value;
-
-    // защищаем /dashboard (+ все вложенные)
-    if (pathname.startsWith("/dashboard") && !token) {
-        const url = new URL("/login", request.url);
-        return NextResponse.redirect(url);
-    }
-
     return NextResponse.next();
 }
 
-// матчим только то, что нужно
 export const config = {
-    matcher: ["/dashboard/:path*", "/((?!_next|favicon.ico|public).*)"],
+    matcher: ["/chat/:path*", "/dashboard/:path*"],
 };

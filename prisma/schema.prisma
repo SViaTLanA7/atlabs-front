@@ -1,0 +1,107 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  name          String?
+  email         String?  @unique
+  emailVerified DateTime?
+  image         String?
+  // Billing
+  plan          Plan     @default(FREE)
+  stripeCustomerId String?
+  // Usage
+  usage         Usage?
+  // Auth
+  accounts      Account[]
+  sessions      Session[]
+  // Chat history
+  messages      Message[]
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+enum Plan {
+  FREE
+  STUDENT
+  PRO
+}
+
+model Subscription {
+  id        String  @id @default(cuid())
+  userId    String  @unique
+  plan      Plan
+  active    Boolean @default(false)
+  // Stripe bookkeeping
+  stripeSubscriptionId String?
+  periodEnd  DateTime?
+
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Usage {
+  id        String  @id @default(cuid())
+  userId    String  @unique
+  // Считаем бюджет на период (reset ежемесячно webcron’ом/триггером)
+  tokensUsed   Int     @default(0)
+  tokensLimit  Int     @default(100) // FREE по умолчанию — 100
+  periodStart  DateTime @default(now())
+
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  updatedAt DateTime @updatedAt
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  userId    String
+  role      String   // 'user' | 'assistant'
+  content   String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
